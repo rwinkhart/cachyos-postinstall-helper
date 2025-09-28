@@ -21,6 +21,7 @@ func system() {
 			doAll = true
 			fallthrough
 		case 3:
+			// TODO fix!
 			err := os.RemoveAll("/tmp/custom-base-devel/")
 			if err != nil {
 				other.PrintError("Failed to remove /tmp/custom-base-devel", 1)
@@ -106,6 +107,7 @@ depends=(
 			}
 			fallthrough
 		case 5:
+			// TODO move to chroot!
 			cmd := exec.Command("tune2fs", "-O", "fast_commit", front.Input("/dev/driveparition:"))
 			err := cmd.Run()
 			if err != nil {

@@ -4,6 +4,7 @@ import (
 	"github.com/rwinkhart/go-boilerplate/front"
 )
 
+// TODO remove unneeded linux-firmware packages!
 func removals() {
 	for {
 		var doAll bool
