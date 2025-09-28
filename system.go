@@ -21,7 +21,7 @@ func system() {
 			doAll = true
 			fallthrough
 		case 3:
-			writeFile("/etc/doas.conf", "permit persist keepenv :wheel as root", "root", 0644)
+			writeFile("/etc/doas.conf", "permit persist keepenv :wheel as root\n", "root", 0644)
 			writeFile("/tmp/PKGBUILD", `pkgname=base-devel
 pkgver=1
 pkgrel=2
@@ -82,7 +82,7 @@ depends=(
 			var sysctlConf strings.Builder
 			sysctlConf.WriteString("net.ipv6.conf.all.use_tempaddr = 2\nnet.ipv6.conf.default.use_tempaddr = 2")
 			for _, nic := range nics {
-				sysctlConf.WriteString("\nnet.ipv6.conf." + nic.Name() + "use_tempaddr = 2")
+				sysctlConf.WriteString("\nnet.ipv6.conf." + nic.Name() + "use_tempaddr = 2\n")
 			}
 			writeFile("/etc/sysctl.d/40-ipv6-priv-ext.conf", sysctlConf.String(), "root", 0644)
 
@@ -102,7 +102,7 @@ depends=(
 			}
 			fallthrough
 		case 6:
-			writeFile("/etc/sysctl.d/35-sysrq.conf", "kernel.sysrq = 244", "root", 0644)
+			writeFile("/etc/sysctl.d/35-sysrq.conf", "kernel.sysrq = 244\n", "root", 0644)
 
 			if !doAll {
 				break
@@ -143,5 +143,5 @@ func addKernelParams(newParameters []string) {
 		}
 	}
 	parameters = append(parameters, newParameters...)
-	writeFile("/boot/loader/entries/linux-cachyos.conf", "title Linux Cachyos\noptions root=UUID=e2ff600b-0202-4620-bed3-54d7a58414f8 "+strings.Join(parameters, " ")+"\nlinux /vmlinuz-linux-cachyos\ninitrd /initramfs-linux-cachyos.img", "root", 0700)
+	writeFile("/boot/loader/entries/linux-cachyos.conf", "title Linux Cachyos\noptions root=UUID=e2ff600b-0202-4620-bed3-54d7a58414f8 "+strings.Join(parameters, " ")+"\nlinux /vmlinuz-linux-cachyos\ninitrd /initramfs-linux-cachyos.img\n", "root", 0700)
 }

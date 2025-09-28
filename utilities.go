@@ -34,7 +34,7 @@ func managePackage(action, targetPackage string) {
 func writeFile(path, data, owner string, perms os.FileMode) {
 	err := os.WriteFile(path, []byte(data), perms)
 	if err != nil {
-		other.PrintError("Failed to write to "+path, 1)
+		other.PrintError("Failed to write to "+path+":"+err.Error(), 1)
 	}
 	if owner != "root" {
 		userInfo, err := user.Lookup(owner)

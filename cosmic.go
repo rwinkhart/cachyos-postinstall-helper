@@ -27,7 +27,7 @@ func cosmic() {
 	}
 
 	// Replace SDDM with cosmic-greeter
-	writeFile("/etc/greetd/config.toml", "[terminal]\nvt = 1\n\n[default_session]\ncommand = \"cosmic-comp /bin/cosmic-greeter\"\nuser = \"cosmic-greeter\"", "root", 0644)
+	writeFile("/etc/greetd/config.toml", "[terminal]\nvt = 1\n\n[default_session]\ncommand = \"cosmic-comp /bin/cosmic-greeter\"\nuser = \"cosmic-greeter\"\n", "root", 0644)
 	manageService("stop", "sddm.service")
 	manageService("disable", "sddm.service")
 	manageService("enable", "greetd.service")
