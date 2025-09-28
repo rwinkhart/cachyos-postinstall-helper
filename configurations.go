@@ -45,7 +45,7 @@ func configurations() {
 			}
 			fallthrough
 		case 6:
-			err := os.Mkdir("/home/"+getUsername()+"/.config/zed", 0755)
+			err := os.MkdirAll("/home/"+getUsername()+"/.config/zed", 0755)
 			if err != nil {
 				other.PrintError("Failed to create zed config directory", 1)
 			}
@@ -111,7 +111,8 @@ export PROTON_ENABLE_WAYLAND=1
 
 # MISC SETTINGS
 export EDITOR=nvim
-export BUILDDIR=/tmp/makepkg`
+export BUILDDIR=/tmp/makepkg
+`
 
 const zshrc = `# Shell settings
 HISTFILE="$XDG_CACHE_HOME"/zsh-histfile
@@ -167,7 +168,8 @@ alias powersave='doas /usr/local/bin/powerset.sh powersave'
 alias performance='doas /usr/local/bin/powerset.sh performance'
 alias schedutil='doas /usr/local/bin/powerset.sh schedutil'
 alias poweroff='doas /usr/bin/poweroff'
-alias reboot='doas /usr/bin/reboot'`
+alias reboot='doas /usr/bin/reboot'
+`
 
 const sysinitVim = `" rwinkhart/cachyos-postinstall-helper 09/28/2025
 
@@ -232,7 +234,8 @@ endfunction
 augroup resCur
   autocmd!
   autocmd BufWinEnter * call ResCur()
-augroup END`
+augroup END
+`
 
 const zed = `{
 	// rwinkhart/cachyos-postinstall-helper 09/28/2025
@@ -315,7 +318,8 @@ const zed = `{
     "git_panel": {
         "button": false
     }
-}`
+}
+`
 
 const makepkg = `#!/hint/bash
 #
@@ -479,7 +483,8 @@ SRCEXT='.src.tar.gz'
 #########################################################################
 #
 #-- Command used to run pacman as root, instead of trying sudo and su
-PACMAN_AUTH=(doas)`
+PACMAN_AUTH=(doas)
+`
 
 const makepkgRS = `#!/hint/bash
 #
@@ -496,7 +501,8 @@ RUSTFLAGS="-Cforce-frame-pointers=yes -C opt-level=3 -C target-cpu=native"
 
 # Additional compiler flags appended to "RUSTFLAGS" for use in debugging.
 # Read linkman:rustc[1] for more details on the available flags.
-DEBUG_RUSTFLAGS="-C debuginfo=2"`
+DEBUG_RUSTFLAGS="-C debuginfo=2"
+`
 
 const pacman = `# /etc/pacman.conf - rwinkhart/cachyos-postinstall-helper 09/28/2025
 
@@ -609,7 +615,8 @@ Include = /etc/pacman.d/mirrorlist
 # tips on creating your own repositories.
 #[custom]
 #SigLevel = Optional TrustAll
-#Server = file:///home/custompkgs`
+#Server = file:///home/custompkgs
+`
 
 const pacmanHookClean = `[Trigger]
 Operation = Remove
@@ -621,7 +628,8 @@ Target = *
 [Action]
 Description = Keep the last cache and the currently installed.
 When = PostTransaction
-Exec = /usr/bin/paccache -rvk2`
+Exec = /usr/bin/paccache -rvk2
+`
 
 const pacmanHookNvidia = `[Trigger]
 Operation=Install
@@ -636,4 +644,5 @@ Description=Update Nvidia module in initcpio
 Depends=mkinitcpio
 When=PostTransaction
 NeedsTargets
-Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'`
+Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
+`

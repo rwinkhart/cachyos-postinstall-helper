@@ -22,10 +22,7 @@ func system() {
 			fallthrough
 		case 3:
 			writeFile("/etc/doas.conf", "permit persist keepenv :wheel as root", "root", 0644)
-			writeFile("/tmp/PKGBUILD", `# Maintainer: Arch Linux Team
-# Contributor: Levente Polyak <anthraxx[at]archlinux[dot]org>
-
-pkgname=base-devel
+			writeFile("/tmp/PKGBUILD", `pkgname=base-devel
 pkgver=1
 pkgrel=2
 pkgdesc='Basic tools to build Arch Linux packages'
@@ -64,8 +61,8 @@ depends=(
 )
 
 # vim: ts=2 sw=2 et:
-`, "nobody", 0777)
-			cmd := exec.Command("sudo", "-u", "nobody", "makepkg", "-si", "--dir", "/tmp")
+`, getUsername(), 0777)
+			cmd := exec.Command("sudo", "-u", getUsername(), "makepkg", "-si", "--dir", "/tmp")
 			err := cmd.Run()
 			if err != nil {
 				other.PrintError("Failed to build+install custom base-devel", 1)

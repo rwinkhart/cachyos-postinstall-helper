@@ -23,6 +23,6 @@ func universalTweaks() {
 	if err != nil {
 		other.PrintError("Failed to create /etc/modprobe.d/blacklist.conf", 1)
 	}
-	f.WriteString("#Disable kernel watchdog\nblacklist iTCO_wdt")
+	f.WriteString("# Disable kernel watchdog\nblacklist iTCO_wdt")
 	f.Close()
 }

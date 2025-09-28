@@ -28,8 +28,8 @@ func cosmic() {
 		"Tk" + version + "show_maximize":            "false"}
 
 	for key, value := range filenamesToValues {
-		filePath := "/home/" + getUsername() + "/.config/" + key
-		writeFile(filePath, value, getUsername(), 0755)
+		filePath := "/home/" + getUsername() + "/.config/cosmic/com.system76.Cosmic" + key
+		writeFile(filePath, value+"\n", getUsername(), 0755)
 	}
 
 	// Replace SDDM with cosmic-greeter
