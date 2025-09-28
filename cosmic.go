@@ -1,11 +1,5 @@
 package main
 
-import (
-	"os/exec"
-
-	"github.com/rwinkhart/go-boilerplate/other"
-)
-
 func cosmic() {
 	version := "/v1/"
 	filenamesToValues := map[string]string{
@@ -37,9 +31,5 @@ func cosmic() {
 	manageService("stop", "sddm.service")
 	manageService("disable", "sddm.service")
 	manageService("enable", "greetd.service")
-	cmd := exec.Command("pacman", "-Rcns", "sddm", "--noconfirm")
-	err := cmd.Run()
-	if err != nil {
-		other.PrintError("Failed to remove SDDM", 1)
-	}
+	managePackage("-Rcns", "sddm")
 }

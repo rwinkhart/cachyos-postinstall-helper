@@ -2,7 +2,6 @@ package main
 
 import (
 	"os"
-	"os/exec"
 
 	"github.com/rwinkhart/go-boilerplate/front"
 	"github.com/rwinkhart/go-boilerplate/other"
@@ -19,11 +18,7 @@ func configurations() {
 			doAll = true
 			fallthrough
 		case 3:
-			cmd := exec.Command("pacman", "-S", "wayland-protocols", "--noconfirm")
-			err := cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to install wayland-protocols", 1)
-			}
+			managePackage("-S", "wayland-protocols")
 			writeFile("/home/"+getUsername()+"/.profile", shellProfile, getUsername(), 0644)
 
 			if !doAll {
@@ -63,11 +58,7 @@ func configurations() {
 			}
 			fallthrough
 		case 8:
-			cmd := exec.Command("pacman", "-S", "pacman-contrib", "--noconfirm")
-			err := cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to install pacman-contrib", 1)
-			}
+			managePackage("-S", "pacman-contrib")
 			writeFile("/etc/pacman.conf", pacman, "root", 0644)
 			writeFile("/etc/pacman.d/hooks/paccache-clean.hook", pacmanHookClean, "root", 0644)
 			writeFile("/etc/pacman.d/hooks/nvidia.hook", pacmanHookNvidia, "root", 0644)

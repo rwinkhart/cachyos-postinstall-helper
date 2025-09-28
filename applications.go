@@ -18,63 +18,35 @@ func applications() {
 			doAll = true
 			fallthrough
 		case 3:
-			cmd := exec.Command("pacman", "-S", "pamac-aur", "--noconfirm")
-			err := cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application installation", 1)
-			}
-			cmd = exec.Command("pacman", "-Rcns", "octopi", "--noconfirm")
-			err = cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application removal", 1)
-			}
+			managePackage("-S", "pamac-aur")
+			managePackage("-Rcns", "octopi")
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 4:
-			cmd := exec.Command("pacman", "-S", "yay-bin", "--noconfirm")
-			err := cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application installation", 1)
-			}
-			cmd = exec.Command("pacman", "-Rcns", "paru", "--noconfirm")
-			err = cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application removal", 1)
-			}
+			managePackage("-S", "yay-bin")
+			managePackage("-Rcns", "paru")
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 5:
-			cmd := exec.Command("pacman", "-S", "htop", "--noconfirm")
-			err := cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application installation", 1)
-			}
-			cmd = exec.Command("pacman", "-Rcns", "btop", "--noconfirm")
-			err = cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application removal", 1)
-			}
+			managePackage("-S", "htop")
+			managePackage("-Rcns", "btop")
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 6:
-			cmd := exec.Command("pacman", "-S", "neovim", "--noconfirm")
+			managePackage("-S", "neovim")
+			cmd := exec.Command("pacman", "-Rcns", "vi", "vim", "nano", "micro", "--noconfirm")
 			err := cmd.Run()
 			if err != nil {
-				other.PrintError("Failed to perform application installation", 1)
-			}
-			cmd = exec.Command("pacman", "-Rcns", "vi", "vim", "nano", "micro", "--noconfirm")
-			err = cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application removals", 1)
+				other.PrintError("Failed to perform application removals for neovim installation", 1)
 			}
 
 			if !doAll {
@@ -85,7 +57,7 @@ func applications() {
 			cmd := exec.Command("pacman", "-S", "virt-manager", "qemu-desktop", "libvirt", "--noconfirm")
 			err := cmd.Run()
 			if err != nil {
-				other.PrintError("Failed to perform application installations", 1)
+				other.PrintError("Failed to perform application installations for virt-manager", 1)
 			}
 			manageService("enable", "libvirtd.service")
 			manageService("start", "libvirtd.service")
@@ -95,33 +67,21 @@ func applications() {
 			}
 			fallthrough
 		case 8:
-			cmd := exec.Command("pacman", "-S", "librewolf-bin", "--noconfirm")
-			err := cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application installation", 1)
-			}
+			managePackage("-S", "librewolf-bin")
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 9:
-			cmd := exec.Command("pacman", "-S", "zed", "--noconfirm")
-			err := cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application installation", 1)
-			}
+			managePackage("-S", "zed")
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 10:
-			cmd := exec.Command("pacman", "-S", "steam", "--noconfirm")
-			err := cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application installation", 1)
-			}
+			managePackage("-S", "steam")
 		}
 	}
 }

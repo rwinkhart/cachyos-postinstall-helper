@@ -38,11 +38,7 @@ func removals() {
 			target = "modemmanager"
 		}
 		if !doAll {
-			cmd := exec.Command("pacman", "-Rcns", target, "--noconfirm")
-			err := cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to remove "+target, 1)
-			}
+			managePackage("-Rcns", target)
 		}
 	}
 }

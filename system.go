@@ -67,16 +67,8 @@ depends=(
 			if err != nil {
 				other.PrintError("Failed to build+install custom base-devel", 1)
 			}
-			cmd = exec.Command("pacman", "-S", "opendoas", "--noconfirm")
-			err = cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to install opendoas", 1)
-			}
-			cmd = exec.Command("pacman", "-R", "sudo", "--noconfirm")
-			err = cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to remove sudo", 1)
-			}
+			managePackage("-S", "opendoas")
+			managePackage("-R", "sudo")
 
 			if !doAll {
 				break

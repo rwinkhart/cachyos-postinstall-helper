@@ -23,6 +23,14 @@ func manageService(action, service string) {
 	}
 }
 
+func managePackage(action, targetPackage string) {
+	cmd := exec.Command("pacman", action, targetPackage, "--noconfirm")
+	err := cmd.Run()
+	if err != nil {
+		other.PrintError("Failed to "+action+" "+targetPackage, 1)
+	}
+}
+
 func writeFile(path, data, owner string, perms os.FileMode) {
 	err := os.WriteFile(path, []byte(data), perms)
 	if err != nil {
