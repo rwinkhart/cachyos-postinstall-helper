@@ -10,7 +10,7 @@ import (
 func applications() {
 	for {
 		var doAll bool
-		choice := front.InputMenuGen("Application to install:", []string{"back", "all", "pamac-aur (replaces octopi)", "yay-bin (replaces paru)", "htop (replaces btop)", "neovim (replaces vi+vim+nano+micro)", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam"})
+		choice := front.InputMenuGen("Application to install:", []string{"back", "all", "pamac-aur", "yay-bin (replaces paru)", "htop (replaces btop)", "neovim (replaces vi+vim+nano+micro)", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam"})
 		switch choice {
 		case 1:
 			return
@@ -19,7 +19,6 @@ func applications() {
 			fallthrough
 		case 3:
 			managePackage("-S", "pamac-aur")
-			managePackage("-Rcns", "octopi")
 
 			if !doAll {
 				break

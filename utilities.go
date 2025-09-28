@@ -37,14 +37,7 @@ func writeFile(path, data, owner string, perms os.FileMode) {
 		other.PrintError("Failed to write to "+path+":"+err.Error(), 1)
 	}
 	if owner != "root" {
-		userInfo, err := user.Lookup(owner)
-		if err != nil {
-			other.PrintError("Failed to lookup UID for "+owner, 1)
-		}
-		uid, err := strconv.Atoi(userInfo.Uid)
-		if err != nil {
-			other.PrintError("Failed to convert UID to integer", 1)
-		}
+		uid := getUID()
 		err = os.Chown(path, uid, uid)
 		if err != nil {
 			other.PrintError("Failed to set ownership of "+path, 1)
@@ -58,4 +51,16 @@ func getUsername() string {
 	}
 	localUsername := username
 	return localUsername
+}
+
+func getUID() int {
+	userInfo, err := user.Lookup(getUsername())
+	if err != nil {
+		other.PrintError("Failed to lookup UID for "+getUsername(), 1)
+	}
+	uid, err := strconv.Atoi(userInfo.Uid)
+	if err != nil {
+		other.PrintError("Failed to convert UID to integer", 1)
+	}
+	return uid
 }

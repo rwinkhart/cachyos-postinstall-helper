@@ -21,8 +21,18 @@ func system() {
 			doAll = true
 			fallthrough
 		case 3:
+			err := os.RemoveAll("/tmp/custom-base-devel/")
+			if err != nil {
+				other.PrintError("Failed to remove /tmp/custom-base-devel", 1)
+			}
 			writeFile("/etc/doas.conf", "permit persist keepenv :wheel as root\n", "root", 0644)
-			writeFile("/tmp/PKGBUILD", `pkgname=base-devel
+			err = os.MkdirAll("/tmp/custom-base-devel", 0777)
+			if err != nil {
+				other.PrintError("Failed to create /tmp/custom-base-devel/", 1)
+			}
+			uid := getUID()
+			err = os.Chown("/tmp/custom-base-devel", uid, uid)
+			writeFile("/tmp/custom-base-devel/PKGBUILD", `pkgname=base-devel
 pkgver=1
 pkgrel=2
 pkgdesc='Basic tools to build Arch Linux packages'
@@ -62,13 +72,18 @@ depends=(
 
 # vim: ts=2 sw=2 et:
 `, getUsername(), 0777)
-			cmd := exec.Command("sudo", "-u", getUsername(), "makepkg", "-si", "--dir", "/tmp")
-			err := cmd.Run()
+			cmd := exec.Command("sudo", "-u", getUsername(), "makepkg", "--dir", "/tmp/custom-base-devel")
+			err = cmd.Run()
 			if err != nil {
-				other.PrintError("Failed to build+install custom base-devel", 1)
+				other.PrintError("Failed to build+install custom base-devel: "+err.Error(), 1)
 			}
+			managePackage("-U", "/tmp/custom-base-devel/base-devel-1-2-any.pkg.tar.xz")
 			managePackage("-S", "opendoas")
-			managePackage("-R", "sudo")
+			cmd = exec.Command("pacman", "-R", "sudo", "qt-sudo", "octopi")
+			err = cmd.Run()
+			if err != nil {
+				other.PrintError("Failed to remove sudo", 1)
+			}
 
 			if !doAll {
 				break
@@ -82,9 +97,9 @@ depends=(
 			var sysctlConf strings.Builder
 			sysctlConf.WriteString("net.ipv6.conf.all.use_tempaddr = 2\nnet.ipv6.conf.default.use_tempaddr = 2")
 			for _, nic := range nics {
-				sysctlConf.WriteString("\nnet.ipv6.conf." + nic.Name() + "use_tempaddr = 2\n")
+				sysctlConf.WriteString("\nnet.ipv6.conf." + nic.Name() + ".use_tempaddr = 2")
 			}
-			writeFile("/etc/sysctl.d/40-ipv6-priv-ext.conf", sysctlConf.String(), "root", 0644)
+			writeFile("/etc/sysctl.d/40-ipv6-priv-ext.conf", sysctlConf.String()+"\n", "root", 0644)
 
 			if !doAll {
 				break
