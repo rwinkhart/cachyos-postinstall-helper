@@ -10,7 +10,7 @@ import (
 func configurations() {
 	for {
 		var doAll bool
-		choice := front.InputMenuGen("Custom config:", []string{"back", "all", "shell profile", "zshrc", "neovim", "zed", "makepkg", "pacman"})
+		choice := front.InputMenuGen("Custom config:", []string{"BACK", "ALL", "shell profile", "zshrc", "neovim", "zed", "makepkg", "pacman"})
 		switch choice {
 		case 1:
 			return

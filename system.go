@@ -13,7 +13,7 @@ import (
 func system() {
 	for {
 		var doAll bool
-		choice := front.InputMenuGen("Tweak:", []string{"back", "all", "replace sudo with doas", "enable ipv6 privacy extensions", "enable ext4 fast_commit", "enable SysRq reboots", "disable kernel security mitigations", "unlock amdgpu tuning", "enable amd_pstate in passive mode (recommended for zenver2)"})
+		choice := front.InputMenuGen("Tweak:", []string{"BACK", "ALL", "replace sudo with doas", "enable ipv6 privacy extensions", "enable ext4 fast_commit", "enable SysRq reboots", "disable kernel security mitigations", "unlock amdgpu tuning", "enable amd_pstate in passive mode (recommended for zenver2)"})
 		switch choice {
 		case 1:
 			return

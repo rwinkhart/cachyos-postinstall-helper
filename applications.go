@@ -10,7 +10,7 @@ import (
 func applications() {
 	for {
 		var doAll bool
-		choice := front.InputMenuGen("Application to install:", []string{"back", "all", "pamac-aur", "yay-bin", "htop", "neovim", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam"})
+		choice := front.InputMenuGen("Application to install:", []string{"BACK", "ALL", "pamac-aur", "yay-bin", "htop", "neovim", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam"})
 		switch choice {
 		case 1:
 			return
