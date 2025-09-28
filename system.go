@@ -79,7 +79,7 @@ depends=(
 			}
 			managePackage("-U", "/tmp/custom-base-devel/base-devel-1-2-any.pkg.tar.xz")
 			managePackage("-S", "opendoas")
-			cmd = exec.Command("pacman", "-R", "sudo", "qt-sudo", "octopi")
+			cmd = exec.Command("pacman", "-R", "sudo", "qt-sudo", "octopi", "--noconfirm")
 			err = cmd.Run()
 			if err != nil {
 				other.PrintError("Failed to remove sudo", 1)

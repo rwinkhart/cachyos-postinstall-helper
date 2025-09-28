@@ -26,7 +26,6 @@ func applications() {
 			fallthrough
 		case 4:
 			managePackage("-S", "yay-bin")
-			managePackage("-Rcns", "paru")
 
 			if !doAll {
 				break
@@ -34,7 +33,6 @@ func applications() {
 			fallthrough
 		case 5:
 			managePackage("-S", "htop")
-			managePackage("-Rcns", "btop")
 
 			if !doAll {
 				break
@@ -42,11 +40,6 @@ func applications() {
 			fallthrough
 		case 6:
 			managePackage("-S", "neovim")
-			cmd := exec.Command("pacman", "-Rcns", "vi", "vim", "nano", "micro", "--noconfirm")
-			err := cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application removals for neovim installation", 1)
-			}
 
 			if !doAll {
 				break
