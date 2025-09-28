@@ -10,7 +10,7 @@ import (
 func applications() {
 	for {
 		var doAll bool
-		choice := front.InputMenuGen("Application to install:", []string{"back", "all", "pamac-aur", "yay-bin (replaces paru)", "htop (replaces btop)", "neovim (replaces vi+vim+nano+micro)", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam"})
+		choice := front.InputMenuGen("Application to install:", []string{"back", "all", "pamac-aur", "yay-bin", "htop", "neovim", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam"})
 		switch choice {
 		case 1:
 			return
@@ -53,6 +53,7 @@ func applications() {
 			}
 			manageService("enable", "libvirtd.service")
 			manageService("start", "libvirtd.service")
+			// TODO manage user groups!
 
 			if !doAll {
 				break
