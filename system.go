@@ -20,10 +20,10 @@ func system() {
 			doAll = true
 			fallthrough
 		case 3:
-			// TODO fix!
 			writeFile(mountPoint+"/etc/doas.conf", "permit persist keepenv :wheel as root\n", "root", 0644)
 			managePackage("-S", "opendoas")
-			//chrootCommandRun([]string{"pacman", "-R", "sudo", "qt-sudo", "--noconfirm"})
+			chrootCommandRun([]string{"pacman", "-S", "--asexplicit", "--dbonly", "archlinux-keyring", "autoconf", "automake", "binutils", "bison", "debugedit", "fakeroot", "file", "findutils", "flex", "gawk", "gcc", "gettext", "grep", "groff", "gzip", "libtool", "m4", "make", "pacman", "patch", "pkgconf", "sed", "texinfo", "which", "--noconfirm"})
+			chrootCommandRun([]string{"pacman", "-R", "sudo", "qt-sudo", "--noconfirm"})
 
 			if !doAll {
 				break

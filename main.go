@@ -50,7 +50,6 @@ func main() {
 		case 4:
 			mountPartition()
 			removals()
-			// TODO remove config/data
 		case 5:
 			mountPartition()
 			applications()
