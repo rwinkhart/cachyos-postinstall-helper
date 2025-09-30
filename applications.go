@@ -1,10 +1,7 @@
 package main
 
 import (
-	"os/exec"
-
 	"github.com/rwinkhart/go-boilerplate/front"
-	"github.com/rwinkhart/go-boilerplate/other"
 )
 
 func applications() {
@@ -46,11 +43,7 @@ func applications() {
 			}
 			fallthrough
 		case 7:
-			cmd := exec.Command("pacman", "-S", "virt-manager", "qemu-desktop", "libvirt", "--noconfirm")
-			err := cmd.Run()
-			if err != nil {
-				other.PrintError("Failed to perform application installations for virt-manager", 1)
-			}
+			chrootCommandRun([]string{"pacman", "-S", "virt-manager", "qemu-desktop", "libvirt", "--noconfirm"})
 			manageService("enable", "libvirtd.service")
 			manageService("start", "libvirtd.service")
 			// TODO manage user groups!

@@ -22,12 +22,11 @@ func cosmic() {
 		"Tk" + version + "show_maximize":            "false"}
 
 	for key, value := range filenamesToValues {
-		filePath := "/home/" + getUsername() + "/.config/cosmic/com.system76.Cosmic" + key
-		writeFile(filePath, value+"\n", getUsername(), 0755)
+		writeFile(mountPoint+"/home/"+getUsername()+"/.config/cosmic/com.system76.Cosmic"+key, value+"\n", getUsername(), 0755)
 	}
 
 	// Replace SDDM with cosmic-greeter
-	writeFile("/etc/greetd/config.toml", "[terminal]\nvt = 1\n\n[default_session]\ncommand = \"cosmic-comp /bin/cosmic-greeter\"\nuser = \"cosmic-greeter\"\n", "root", 0644)
+	writeFile(mountPoint+"/etc/greetd/config.toml", "[terminal]\nvt = 1\n\n[default_session]\ncommand = \"cosmic-comp /bin/cosmic-greeter\"\nuser = \"cosmic-greeter\"\n", "root", 0644)
 	manageService("stop", "sddm.service")
 	manageService("disable", "sddm.service")
 	manageService("enable", "greetd.service")

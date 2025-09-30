@@ -5,30 +5,20 @@ import (
 	"os/exec"
 	"os/user"
 	"strconv"
+	"strings"
 
+	mnt "github.com/moby/sys/mountinfo"
 	"github.com/rwinkhart/go-boilerplate/front"
 	"github.com/rwinkhart/go-boilerplate/other"
 )
 
 func manageService(action, service string) {
-	cmd := exec.Command("systemctl", "daemon-reload")
-	err := cmd.Run()
-	if err != nil {
-		other.PrintError("Failed to perform daemon-reload", 1)
-	}
-	cmd = exec.Command("systemctl", action, service)
-	err = cmd.Run()
-	if err != nil {
-		other.PrintError("Failed to "+action+" "+service, 1)
-	}
+	chrootCommandRun([]string{"systemctl", "daemon-reload"})
+	chrootCommandRun([]string{"systemctl", action, service})
 }
 
 func managePackage(action, targetPackage string) {
-	cmd := exec.Command("pacman", action, targetPackage, "--noconfirm")
-	err := cmd.Run()
-	if err != nil {
-		other.PrintError("Failed to "+action+" "+targetPackage, 1)
-	}
+	chrootCommandRun([]string{"pacman", action, targetPackage, "--noconfirm"})
 }
 
 func writeFile(path, data, owner string, perms os.FileMode) {
@@ -63,4 +53,39 @@ func getUID() int {
 		other.PrintError("Failed to convert UID to integer", 1)
 	}
 	return uid
+}
+
+func partitionIsMounted() bool {
+	isMounted, err := mnt.Mounted(mountPoint)
+	if err != nil {
+		other.PrintError("Failed to verify whether "+partitionR+" is mounted", 1)
+	}
+	return isMounted
+}
+
+func mountPartition() {
+	if !partitionIsMounted() {
+		// root
+		cmd := exec.Command("mount", partitionR, mountPoint)
+		err := cmd.Run()
+		if err != nil {
+			other.PrintError("Failed to mount "+partitionR+" on "+mountPoint, 1)
+		}
+
+		// boot
+		cmd = exec.Command("mount", partitionB, mountPoint+"/boot")
+		err = cmd.Run()
+		if err != nil {
+			other.PrintError("Failed to mount "+partitionB+" on "+mountPoint+"/boot", 1)
+		}
+	}
+}
+
+func chrootCommandRun(args []string) {
+	args = append([]string{mountPoint}, args...)
+	cmd := exec.Command("arch-chroot", args...)
+	err := cmd.Run()
+	if err != nil {
+		other.PrintError("Failed to run \""+strings.Join(args[1:], " ")+"\" within chroot: "+err.Error(), 1)
+	}
 }

@@ -8,7 +8,7 @@ import (
 func removals() {
 	for {
 		var doAll bool
-		choice := front.InputMenuGen("Application to remove:", []string{"BACK", "ALL", "linux-cachyos-lts"})
+		choice := front.InputMenuGen("Application to remove:", []string{"BACK", "linux-cachyos-lts"})
 		var target string
 		switch choice {
 		case 1:

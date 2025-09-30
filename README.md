@@ -32,8 +32,4 @@ If you intend on using all options provided by this utility, it is best to use s
     - whichever one you don't need
 - Firefox and language package
 
-As soon as the system is installed and booted, run this utility as root and follow the prompts! That's it.
-
-If using to configure Cosmic DE, I recommend running this utility from a raw TTY without Cosmic running.
-
-A reboot is recommended if applying system tweaks.
+As soon as the system is installed (prior to booting into it), run this utility as root and follow the prompts! That's it.

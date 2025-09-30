@@ -19,39 +19,39 @@ func configurations() {
 			fallthrough
 		case 3:
 			managePackage("-S", "wayland-protocols")
-			writeFile("/home/"+getUsername()+"/.profile", shellProfile, getUsername(), 0644)
+			writeFile(mountPoint+"/home/"+getUsername()+"/.profile", shellProfile, getUsername(), 0644)
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 4:
-			writeFile("/home/"+getUsername()+"/.zshrc", zshrc, getUsername(), 0644)
+			writeFile(mountPoint+"/home/"+getUsername()+"/.zshrc", zshrc, getUsername(), 0644)
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 5:
-			writeFile("/etc/xdg/nvim/sysinit.vim", sysinitVim, "root", 0644)
+			writeFile(mountPoint+"/etc/xdg/nvim/sysinit.vim", sysinitVim, "root", 0644)
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 6:
-			err := os.MkdirAll("/home/"+getUsername()+"/.config/zed", 0755)
+			err := os.MkdirAll(mountPoint+"/home/"+getUsername()+"/.config/zed", 0755)
 			if err != nil {
 				other.PrintError("Failed to create zed config directory", 1)
 			}
-			writeFile("/home/"+getUsername()+"/.config/zed/settings.json", zed, getUsername(), 0600)
+			writeFile(mountPoint+"/home/"+getUsername()+"/.config/zed/settings.json", zed, getUsername(), 0600)
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 7:
-			writeFile("/etc/makepkg.conf", makepkg, "root", 0644)
+			writeFile(mountPoint+"/etc/makepkg.conf", makepkg, "root", 0644)
 
 			if !doAll {
 				break
@@ -59,9 +59,9 @@ func configurations() {
 			fallthrough
 		case 8:
 			managePackage("-S", "pacman-contrib")
-			writeFile("/etc/pacman.conf", pacman, "root", 0644)
-			writeFile("/etc/pacman.d/hooks/paccache-clean.hook", pacmanHookClean, "root", 0644)
-			writeFile("/etc/pacman.d/hooks/nvidia.hook", pacmanHookNvidia, "root", 0644)
+			writeFile(mountPoint+"/etc/pacman.conf", pacman, "root", 0644)
+			writeFile(mountPoint+"/etc/pacman.d/hooks/paccache-clean.hook", pacmanHookClean, "root", 0644)
+			writeFile(mountPoint+"/etc/pacman.d/hooks/nvidia.hook", pacmanHookNvidia, "root", 0644)
 		}
 	}
 }
