@@ -3,8 +3,6 @@ package main
 import (
 	"os"
 	"os/exec"
-	"os/user"
-	"strconv"
 	"strings"
 
 	mnt "github.com/moby/sys/mountinfo"
@@ -27,8 +25,7 @@ func writeFile(path, data, owner string, perms os.FileMode) {
 		other.PrintError("Failed to write to "+path+":"+err.Error(), 1)
 	}
 	if owner != "root" {
-		uid := getUID()
-		err = os.Chown(path, uid, uid)
+		err = os.Chown(path, 1000, 1000)
 		if err != nil {
 			other.PrintError("Failed to set ownership of "+path, 1)
 		}
@@ -41,18 +38,6 @@ func getUsername() string {
 	}
 	localUsername := username
 	return localUsername
-}
-
-func getUID() int {
-	userInfo, err := user.Lookup(getUsername())
-	if err != nil {
-		other.PrintError("Failed to lookup UID for "+getUsername(), 1)
-	}
-	uid, err := strconv.Atoi(userInfo.Uid)
-	if err != nil {
-		other.PrintError("Failed to convert UID to integer", 1)
-	}
-	return uid
 }
 
 func partitionIsMounted() bool {
@@ -87,5 +72,16 @@ func chrootCommandRun(args []string) {
 	err := cmd.Run()
 	if err != nil {
 		other.PrintError("Failed to run \""+strings.Join(args[1:], " ")+"\" within chroot: "+err.Error(), 1)
+	}
+}
+
+func mkdir(path string) {
+	err := os.MkdirAll(path, 0755)
+	if err != nil {
+		other.PrintError("Failed to create \""+path+"/\" directory", 1)
+	}
+	err = os.Chown(path, 1000, 1000)
+	if err != nil {
+		other.PrintError("Failed to set ownership of \""+path+"\"", 1)
 	}
 }

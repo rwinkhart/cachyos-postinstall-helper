@@ -1,10 +1,7 @@
 package main
 
 import (
-	"os"
-
 	"github.com/rwinkhart/go-boilerplate/front"
-	"github.com/rwinkhart/go-boilerplate/other"
 )
 
 func configurations() {
@@ -40,10 +37,7 @@ func configurations() {
 			}
 			fallthrough
 		case 6:
-			err := os.MkdirAll(mountPoint+"/home/"+getUsername()+"/.config/zed", 0755)
-			if err != nil {
-				other.PrintError("Failed to create zed config directory", 1)
-			}
+			mkdir(mountPoint + "/home/" + getUsername() + "/.config/zed")
 			writeFile(mountPoint+"/home/"+getUsername()+"/.config/zed/settings.json", zed, getUsername(), 0600)
 
 			if !doAll {

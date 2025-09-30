@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"os/user"
 
 	"github.com/rwinkhart/go-boilerplate/front"
@@ -26,10 +25,7 @@ func main() {
 
 	partitionR = front.Input("Target root partition (/dev/driveparition):")
 	partitionB = front.Input("Target boot (efi) partition (/dev/driveparition):")
-	err = os.MkdirAll("/mnt/cph", 0777)
-	if err != nil {
-		other.PrintError("Failed to create mount directory (/mnt/cph)", 1)
-	}
+	mkdir("/mnt/cph")
 
 	for {
 		fmt.Println()
@@ -37,7 +33,7 @@ func main() {
 		switch choice {
 		case 1:
 			if partitionIsMounted() {
-				fmt.Println(partitionR + " is already mounted on " + mountPoint)
+				fmt.Println("\n" + partitionR + " is already mounted on " + mountPoint)
 			} else {
 				premount()
 			}

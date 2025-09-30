@@ -1,5 +1,9 @@
 package main
 
+import (
+	"strings"
+)
+
 func cosmic() {
 	version := "/v1/"
 	filenamesToValues := map[string]string{
@@ -21,8 +25,11 @@ func cosmic() {
 		"Panel.Panel" + version + "size":            "XS",
 		"Tk" + version + "show_maximize":            "false"}
 
+	mkdir(mountPoint + "/home/" + getUsername() + "/.config/cosmic")
 	for key, value := range filenamesToValues {
-		writeFile(mountPoint+"/home/"+getUsername()+"/.config/cosmic/com.system76.Cosmic"+key, value+"\n", getUsername(), 0755)
+		filePath := mountPoint + "/home/" + getUsername() + "/.config/cosmic/com.system76.Cosmic" + key
+		mkdir(filePath[:strings.LastIndex(filePath, "/")])
+		writeFile(filePath, value+"\n", getUsername(), 0755)
 	}
 
 	// Replace SDDM with cosmic-greeter
