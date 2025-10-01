@@ -96,6 +96,7 @@ export PROTON_ENABLE_WAYLAND=1
 
 # MISC SETTINGS
 export EDITOR=nvim
+export SHELL=/usr/bin/zsh
 export BUILDDIR=/tmp/makepkg
 `
 
