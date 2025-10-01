@@ -12,7 +12,7 @@ func cosmic() {
 		"Comp" + version + "autotile_behavior":      "PerWorkspace",
 		"Comp" + version + "cursor_follows_focus":   "false",
 		"Comp" + version + "focus_follows_cursor":   "true",
-		"Comp" + version + "input_default":          "(\n    state: Enabled,\n    acceleration: Some((\n        profile: Some(Flat),\n        speed: 0.0,\n    )),\n)",
+		"Comp" + version + "input_default":          "(\n    state: Enabled,\n    acceleration: Some((\n        profile: Some(Flat),\n        speed: -0.10288643756187243,\n    )),\n)",
 		"Comp" + version + "workspaces":             "(\n    workspace_mode: Global,\n    workspace_layout: Vertical,\n)",
 		"Panel" + version + "entries":               "[\n    \"Panel\",\n]",
 		"Panel.Panel" + version + "anchor_gap":      "true",
