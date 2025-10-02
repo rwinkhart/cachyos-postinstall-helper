@@ -1,7 +1,10 @@
 package main
 
 import (
+	"os"
+
 	"github.com/rwinkhart/go-boilerplate/front"
+	"github.com/rwinkhart/go-boilerplate/other"
 )
 
 func applications() {
@@ -31,6 +34,14 @@ func applications() {
 		case 5:
 			managePackages("-S", []string{"zsh", "zsh-autosuggestions", "zsh-syntax-highlighting"})
 			writeFile(mountPoint+"/home/"+getUsername()+"/.zshrc", zshrc, getUsername(), 0644)
+			err := os.RemoveAll(mountPoint + "/home/" + getUsername() + "/.bash_profile")
+			if err != nil {
+				other.PrintError("Failed to remove .bash_profile", 1)
+			}
+			err = os.RemoveAll(mountPoint + "/home/" + getUsername() + "/.bashrc")
+			if err != nil {
+				other.PrintError("Failed to remove .bashrc", 1)
+			}
 
 			if !doAll {
 				break
