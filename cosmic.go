@@ -16,7 +16,6 @@ func cosmic() {
 		"Comp" + version + "workspaces":             "(\n    workspace_mode: Global,\n    workspace_layout: Vertical,\n)",
 		"Panel" + version + "entries":               "[\n    \"Panel\",\n]",
 		"Panel.Panel" + version + "anchor_gap":      "true",
-		"Panel.Panel" + version + "border_radius":   "10",
 		"Panel.Panel" + version + "exclusive_zone":  "true",
 		"Panel.Panel" + version + "expand_to_edges": "false",
 		"Panel.Panel" + version + "opacity":         "0.75",
