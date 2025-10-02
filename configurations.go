@@ -7,7 +7,7 @@ import (
 func configurations() {
 	for {
 		var doAll bool
-		choice := front.InputMenuGen("Custom config:", []string{"BACK", "ALL", "shell profile", "zshrc", "neovim", "zed", "makepkg", "pacman"})
+		choice := front.InputMenuGen("Custom config:", []string{"BACK", "ALL", "shell profile", "neovim", "zed", "makepkg", "pacman"})
 		switch choice {
 		case 1:
 			return
@@ -15,7 +15,7 @@ func configurations() {
 			doAll = true
 			fallthrough
 		case 3:
-			managePackage("-S", "wayland-protocols")
+			managePackages("-S", []string{"wayland-protocols"})
 			writeFile(mountPoint+"/home/"+getUsername()+"/.profile", shellProfile, getUsername(), 0644)
 
 			if !doAll {
@@ -23,20 +23,13 @@ func configurations() {
 			}
 			fallthrough
 		case 4:
-			writeFile(mountPoint+"/home/"+getUsername()+"/.zshrc", zshrc, getUsername(), 0644)
-
-			if !doAll {
-				break
-			}
-			fallthrough
-		case 5:
 			writeFile(mountPoint+"/etc/xdg/nvim/sysinit.vim", sysinitVim, "root", 0644)
 
 			if !doAll {
 				break
 			}
 			fallthrough
-		case 6:
+		case 5:
 			mkdir(mountPoint + "/home/" + getUsername() + "/.config/zed")
 			writeFile(mountPoint+"/home/"+getUsername()+"/.config/zed/settings.json", zed, getUsername(), 0600)
 
@@ -44,15 +37,15 @@ func configurations() {
 				break
 			}
 			fallthrough
-		case 7:
+		case 6:
 			writeFile(mountPoint+"/etc/makepkg.conf", makepkg, "root", 0644)
 
 			if !doAll {
 				break
 			}
 			fallthrough
-		case 8:
-			managePackage("-S", "pacman-contrib")
+		case 7:
+			managePackages("-S", []string{"pacman-contrib"})
 			writeFile(mountPoint+"/etc/pacman.conf", pacman, "root", 0644)
 			writeFile(mountPoint+"/etc/pacman.d/hooks/paccache-clean.hook", pacmanHookClean, "root", 0644)
 			writeFile(mountPoint+"/etc/pacman.d/hooks/nvidia.hook", pacmanHookNvidia, "root", 0644)
@@ -98,63 +91,6 @@ export PROTON_ENABLE_WAYLAND=1
 export EDITOR=nvim
 export SHELL=/usr/bin/zsh
 export BUILDDIR=/tmp/makepkg
-`
-
-const zshrc = `# Shell settings
-HISTFILE="$XDG_CACHE_HOME"/zsh-histfile
-HISTSIZE=2500
-SAVEHIST=2000
-setopt INC_APPEND_HISTORY
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_FIND_NO_DUPS
-unsetopt beep
-bindkey -e
-zstyle :compinstall filename "/home/$USER/.zshrc"
-autoload -Uz compinit
-compinit -d "$XDG_CACHE_HOME"/zcompdump
-PS1='%F{yellow}%?%F{cyan}|%n%f@%F{cyan}%m:%f%1~%f%F{cyan}|%#%f '
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey '^[[H' beginning-of-line
-bindkey '^[[F' end-of-line
-bindkey '^[[3~' delete-char
-
-# Text art on clear/new shell
-art_cat='%F{#fe8019}/\_,_/\
-\ 0 0 /%f'
-art_dog=' %F{#d79921}/___/
-| 6.6 |%f'
-art_bear='%F{#d65d0e}() ()
-(o.o)%f'
-art_snail=' %F{#689d6a}|_/
-/o o\%f'
-art_bunny=' %F{#d5c4a1}/_/
-|^.^|'
-art_jellyfish='%F{#83a598}<===>
-//|\\%f'
-art_school='    %F{#fe8019}<°))><     %F{#fabd2f}><(((.>
-%F{#8ec07c}><(((°>   %F{#d3869b}><((((°>%f'
-art_array=("$art_cat" "$art_dog" "$art_bear" "$art_snail" "$art_bunny" "$art_jellyfish" "$art_school")
-print -Pr "$art_array[$((RANDOM%7+1))]"
-function term_clear() {
-    clear
-    print -Pr "$art_array[$((RANDOM%7+1))]"
-    print -Pn $PS1
-}
-zle -N zsh-redraw term_clear
-bindkey "^L" zsh-redraw
-
-# Stock aliases
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias fastfetch='fastfetch -c neofetch'
-alias unmv='setopt shwordsplit && lastCmdSplit=(${(@s/ /)$(fc -ln -1)}) && newCmd="mv ${lastCmdSplit[3]} ${lastCmdSplit[2]}" && $newCmd && unsetopt shwordsplit'
-alias orphans='doas pacman -Rcns $(pacman -Qqdt)'
-alias powersave='doas /usr/local/bin/powerset.sh powersave'
-alias performance='doas /usr/local/bin/powerset.sh performance'
-alias schedutil='doas /usr/local/bin/powerset.sh schedutil'
-alias poweroff='doas /usr/bin/poweroff'
-alias reboot='doas /usr/bin/reboot'
 `
 
 const sysinitVim = `" rwinkhart/cachyos-postinstall-helper 09/28/2025

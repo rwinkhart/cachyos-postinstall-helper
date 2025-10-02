@@ -17,7 +17,7 @@ func removals() {
 			target = "linux-cachyos-lts"
 		}
 		if !doAll {
-			managePackage("-Rcns", target)
+			managePackages("-Rcns", []string{target})
 		}
 	}
 }

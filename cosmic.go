@@ -37,5 +37,5 @@ func cosmic() {
 	manageService("stop", "sddm.service")
 	manageService("disable", "sddm.service")
 	manageService("enable", "greetd.service")
-	managePackage("-Rcns", "sddm")
+	managePackages("-Rcns", []string{"sddm"})
 }

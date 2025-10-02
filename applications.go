@@ -7,7 +7,7 @@ import (
 func applications() {
 	for {
 		var doAll bool
-		choice := front.InputMenuGen("Application to install:", []string{"BACK", "ALL", "pamac-aur", "yay-bin", "htop", "neovim", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam"})
+		choice := front.InputMenuGen("Application to install:", []string{"BACK", "ALL", "pamac-aur", "yay-bin", "zsh", "htop", "neovim", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam"})
 		switch choice {
 		case 1:
 			return
@@ -15,35 +15,43 @@ func applications() {
 			doAll = true
 			fallthrough
 		case 3:
-			managePackage("-S", "pamac-aur")
+			managePackages("-S", []string{"pamac-aur"})
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 4:
-			managePackage("-S", "yay-bin")
+			managePackages("-S", []string{"yay-bin"})
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 5:
-			managePackage("-S", "htop")
+			managePackages("-S", []string{"zsh", "zsh-autosuggestions", "zsh-syntax-highlighting"})
+			writeFile(mountPoint+"/home/"+getUsername()+"/.zshrc", zshrc, getUsername(), 0644)
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 6:
-			managePackage("-S", "neovim")
+			managePackages("-S", []string{"htop"})
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 7:
-			chrootCommandRun([]string{"pacman", "-S", "virt-manager", "qemu-desktop", "libvirt", "--noconfirm"})
+			managePackages("-S", []string{"neovim"})
+
+			if !doAll {
+				break
+			}
+			fallthrough
+		case 8:
+			managePackages("-S", []string{"virt-manager", "qemu-desktop", "libvirt"})
 			manageService("enable", "libvirtd.service")
 			manageService("start", "libvirtd.service")
 			// TODO manage user groups!
@@ -52,22 +60,79 @@ func applications() {
 				break
 			}
 			fallthrough
-		case 8:
-			managePackage("-S", "librewolf-bin")
-
-			if !doAll {
-				break
-			}
-			fallthrough
 		case 9:
-			managePackage("-S", "zed")
+			managePackages("-S", []string{"librewolf-bin"})
 
 			if !doAll {
 				break
 			}
 			fallthrough
 		case 10:
-			managePackage("-S", "steam")
+			managePackages("-S", []string{"zed"})
+
+			if !doAll {
+				break
+			}
+			fallthrough
+		case 11:
+			managePackages("-S", []string{"steam"})
 		}
 	}
 }
+
+const zshrc = `# Shell settings
+HISTFILE="$XDG_CACHE_HOME"/zsh-histfile
+HISTSIZE=2500
+SAVEHIST=2000
+setopt INC_APPEND_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
+unsetopt beep
+bindkey -e
+zstyle :compinstall filename "/home/$USER/.zshrc"
+autoload -Uz compinit
+compinit -d "$XDG_CACHE_HOME"/zcompdump
+PS1='%F{yellow}%?%F{cyan}|%n%f@%F{cyan}%m:%f%1~%f%F{cyan}|%#%f '
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+bindkey '^[[3~' delete-char
+
+# Text art on clear/new shell
+art_cat='%F{#fe8019}/\_,_/\
+\ 0 0 /%f'
+art_dog=' %F{#d79921}/___/
+| 6.6 |%f'
+art_bear='%F{#d65d0e}() ()
+(o.o)%f'
+art_snail=' %F{#689d6a}|_/
+/o o\%f'
+art_bunny=' %F{#d5c4a1}/_/
+|^.^|'
+art_jellyfish='%F{#83a598}<===>
+//|\\%f'
+art_school='    %F{#fe8019}<°))><     %F{#fabd2f}><(((.>
+%F{#8ec07c}><(((°>   %F{#d3869b}><((((°>%f'
+art_array=("$art_cat" "$art_dog" "$art_bear" "$art_snail" "$art_bunny" "$art_jellyfish" "$art_school")
+print -Pr "$art_array[$((RANDOM%7+1))]"
+function term_clear() {
+    clear
+    print -Pr "$art_array[$((RANDOM%7+1))]"
+    print -Pn $PS1
+}
+zle -N zsh-redraw term_clear
+bindkey "^L" zsh-redraw
+
+# Stock aliases
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias fastfetch='fastfetch -c neofetch'
+alias unmv='setopt shwordsplit && lastCmdSplit=(${(@s/ /)$(fc -ln -1)}) && newCmd="mv ${lastCmdSplit[3]} ${lastCmdSplit[2]}" && $newCmd && unsetopt shwordsplit'
+alias orphans='doas pacman -Rcns $(pacman -Qqdt)'
+alias powersave='doas /usr/local/bin/powerset.sh powersave'
+alias performance='doas /usr/local/bin/powerset.sh performance'
+alias schedutil='doas /usr/local/bin/powerset.sh schedutil'
+alias poweroff='doas /usr/bin/poweroff'
+alias reboot='doas /usr/bin/reboot'
+`

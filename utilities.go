@@ -15,8 +15,8 @@ func manageService(action, service string) {
 	chrootCommandRun([]string{"systemctl", action, service})
 }
 
-func managePackage(action, targetPackage string) {
-	chrootCommandRun([]string{"pacman", action, targetPackage, "--noconfirm"})
+func managePackages(action string, targetPackages []string) {
+	chrootCommandRun(append([]string{"pacman", action, "--noconfirm"}, targetPackages...))
 }
 
 func writeFile(path, data, owner string, perms os.FileMode) {
