@@ -22,7 +22,8 @@ func cosmic() {
 		"Panel.Panel" + version + "plugins_center":  "Some([])",
 		"Panel.Panel" + version + "plugins_wings":   "Some(([\n    \"com.system76.CosmicAppList\",\n], [\n    \"com.system76.CosmicAppletStatusArea\",\n    \"com.system76.CosmicAppletTiling\",\n    \"com.system76.CosmicAppletAudio\",\n    \"com.system76.CosmicAppletBluetooth\",\n    \"com.system76.CosmicAppletNetwork\",\n    \"com.system76.CosmicAppletBattery\",\n    \"com.system76.CosmicAppletNotifications\",\n    \"com.system76.CosmicAppletPower\",\n    \"com.system76.CosmicAppletTime\",\n]))",
 		"Panel.Panel" + version + "size":            "XS",
-		"Tk" + version + "show_maximize":            "false"}
+		"Tk" + version + "show_maximize":            "false",
+		"Term" + version + "focus_follows_mouse":    "true"}
 
 	mkdir(mountPoint + "/home/" + getUsername() + "/.config/cosmic")
 	for key, value := range filenamesToValues {
