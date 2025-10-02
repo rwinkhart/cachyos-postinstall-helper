@@ -10,4 +10,7 @@ func universalTweaks() {
 
 	// Force disable kernel watchdog (kernel parameters should do this as well)
 	writeFile(mountPoint+"/etc/modprobe.d/blacklist.conf", "# Disable kernel watchdog\nblacklist iTCO_wdt\n", "root", 0644)
+
+	// Install essential packages
+	managePackages("-S", []string{"wl-clipboard", "qt6-wayland"})
 }
