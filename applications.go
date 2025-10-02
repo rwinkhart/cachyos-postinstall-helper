@@ -144,11 +144,6 @@ alias grep='grep --color=auto'
 alias fastfetch='fastfetch -c neofetch'
 alias unmv='setopt shwordsplit && lastCmdSplit=(${(@s/ /)$(fc -ln -1)}) && newCmd="mv ${lastCmdSplit[3]} ${lastCmdSplit[2]}" && $newCmd && unsetopt shwordsplit'
 alias orphans='doas pacman -Rcns $(pacman -Qqdt)'
-alias powersave='doas /usr/local/bin/powerset.sh powersave'
-alias performance='doas /usr/local/bin/powerset.sh performance'
-alias schedutil='doas /usr/local/bin/powerset.sh schedutil'
-alias poweroff='doas /usr/bin/poweroff'
-alias reboot='doas /usr/bin/reboot'
 `
 
 const sysinitVim = `" rwinkhart/cachyos-postinstall-helper 09/28/2025
