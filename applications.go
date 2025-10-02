@@ -45,6 +45,7 @@ func applications() {
 			fallthrough
 		case 7:
 			managePackages("-S", []string{"neovim"})
+			writeFile(mountPoint+"/etc/xdg/nvim/sysinit.vim", sysinitVim, "root", 0644)
 
 			if !doAll {
 				break
@@ -69,6 +70,8 @@ func applications() {
 			fallthrough
 		case 10:
 			managePackages("-S", []string{"zed"})
+			mkdir(mountPoint + "/home/" + getUsername() + "/.config/zed")
+			writeFile(mountPoint+"/home/"+getUsername()+"/.config/zed/settings.json", zed, getUsername(), 0600)
 
 			if !doAll {
 				break
@@ -135,4 +138,154 @@ alias performance='doas /usr/local/bin/powerset.sh performance'
 alias schedutil='doas /usr/local/bin/powerset.sh schedutil'
 alias poweroff='doas /usr/bin/poweroff'
 alias reboot='doas /usr/bin/reboot'
+`
+
+const sysinitVim = `" rwinkhart/cachyos-postinstall-helper 09/28/2025
+
+" ensure correct basic settings
+set fileencoding=utf-8
+
+" show line numbers
+set number
+
+" enable basic spellchecking
+set spell
+
+" set keybinds (home/end, delete w/o copy)
+noremap <C-a> <Home>
+imap <C-a> <Home>
+noremap <C-e> <End>
+imap <C-e> <End>
+nnoremap x "_x
+nnoremap <delete> "_x
+
+" expand all tabs and indents to 4 spaces
+set tabstop=4
+set shiftwidth=4
+set expandtab
+autocmd FileType go,html,php,css set noexpandtab
+
+" set default clipboard register to system clipboard
+set clipboard=unnamedplus
+
+" enable visually indented text wrapping
+set wrap
+set breakindent
+set showbreak=→
+
+" do not auto-break lines unless they are 1000+ characters long
+set textwidth=1000
+
+" do not create automatic backups of any sort
+set nobackup
+set nowritebackup
+
+" default to case insensitive search unless a capital is typed
+set ignorecase
+set smartcase
+
+" tell vim to remember certain things when exited
+"  '10  :  marks will be remembered for up to 10 previously edited files
+"  "100 :  will save up to 100 lines for each register
+"  :20  :  up to 20 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
+set viminfo='10,\"100,:20,%,n~/.local/share/nviminfo
+
+" restores cursor position in recently opened files
+function! ResCur()
+  if line("'\"") <= line("$")` +
+	"\nnormal! g`" + `"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+`
+
+const zed = `{
+	// rwinkhart/cachyos-postinstall-helper 09/28/2025
+
+    // AI Settings
+    "telemetry": {
+        "metrics": false,
+        "diagnostics": false
+    },
+    "edit_predictions": {
+        "mode": "subtle",
+        "enabled_in_text_threads": false
+    },
+    "show_edit_predictions": true,
+    "agent": {
+        "default_profile": "ask",
+        "default_model": {
+            "provider": "copilot_chat",
+            "model": "claude-sonnet-4"
+        }
+    },
+    "features": {
+        "edit_prediction_provider": "copilot"
+    },
+    // General Settings
+    "minimap": {
+        "show": "always"
+    },
+    "icon_theme": "JetBrains New UI Icons (Dark)",
+    "middle_click_paste": false,
+    "base_keymap": "VSCode",
+    "autosave": "off",
+    "theme": "Gruvbox Dark",
+    "ui_font_size": 14,
+    "buffer_font_size": 18,
+    "auto_update": false,
+    "terminal": {
+        "shell": {
+            "program": "zsh"
+        }
+    },
+    "tab_size": 4,
+    "preferred_line_length": 120,
+    "git": {
+        "inline_blame": {
+            "enabled": false
+        }
+    },
+    // Language-specific Settings
+    "languages": {
+        "Python": {
+            "soft_wrap": "preferred_line_length"
+        },
+        "Go": {
+            "hard_tabs": true
+        },
+        "JavaScript": {
+            "format_on_save": "off"
+        },
+        "CSS": {
+            "format_on_save": "off"
+        }
+    },
+    // De-clutter UI
+    "tab_bar": {
+        "show_nav_history_buttons": false
+    },
+    "search": {
+        "button": false
+    },
+    "title_bar": {
+        "show_branch_name": false
+    },
+    "notification_panel": {
+        "button": false
+    },
+    "collaboration_panel": {
+        "button": false
+    },
+    "git_panel": {
+        "button": false
+    }
+}
 `
