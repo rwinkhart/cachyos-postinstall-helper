@@ -24,6 +24,8 @@ func system() {
 			managePackages("-S", []string{"opendoas"})
 			managePackages("-S", []string{"--asexplicit", "--dbonly", "archlinux-keyring", "autoconf", "automake", "binutils", "bison", "debugedit", "fakeroot", "file", "findutils", "flex", "gawk", "gcc", "gettext", "grep", "groff", "gzip", "libtool", "m4", "make", "pacman", "patch", "pkgconf", "sed", "texinfo", "which"})
 			managePackages("-R", []string{"base-devel", "sudo"})
+			mkdir(mountPoint + "/home/" + getUsername() + "/.config/yay")
+			writeFile(mountPoint+"/home/"+getUsername()+"/.config/yay/config.json", yay, getUsername(), 0644)
 
 			if !doAll {
 				break
@@ -89,3 +91,10 @@ func addKernelParams(newParameters []string) {
 	parameters = append(parameters, newParameters...)
 	writeFile(mountPoint+"/boot/loader/entries/linux-cachyos.conf", "title Linux Cachyos\noptions root=UUID=e2ff600b-0202-4620-bed3-54d7a58414f8 "+strings.Join(parameters, " ")+"\nlinux /vmlinuz-linux-cachyos\ninitrd /initramfs-linux-cachyos.img\n", "root", 0700)
 }
+
+const yay = `{
+	"sudobin": "doas",
+	"sudoflags": "",
+	"bottomup": true,
+	"sudoloop": false,
+}`
