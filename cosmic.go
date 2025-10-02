@@ -33,9 +33,9 @@ func cosmic() {
 	}
 
 	// Replace SDDM with cosmic-greeter
-	writeFile(mountPoint+"/etc/greetd/config.toml", "[terminal]\nvt = 1\n\n[default_session]\ncommand = \"cosmic-comp /bin/cosmic-greeter\"\nuser = \"cosmic-greeter\"\n", "root", 0644)
-	manageService("stop", "sddm.service")
-	manageService("disable", "sddm.service")
-	manageService("enable", "greetd.service")
-	managePackages("-Rcns", []string{"sddm"})
+	// Tweak temporarily disabled due to greeter bugs (not initializing xwayland; weird text box focus behavior)
+	//manageService("stop", "sddm.service")
+	//manageService("disable", "sddm.service")
+	//manageService("enable", "cosmic-greeter.service")
+	//managePackages("-Rcns", []string{"sddm"})
 }
