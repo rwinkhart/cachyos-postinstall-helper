@@ -57,9 +57,8 @@ func applications() {
 			fallthrough
 		case 7:
 			managePackages("-S", []string{"virt-manager", "qemu-desktop", "libvirt"})
-			manageService("enable", "libvirtd.service")
-			manageService("start", "libvirtd.service")
-			// TODO manage user groups!
+			manageService("enable", "libvirtd.socket")
+			chrootCommandRun([]string{"usermod", "-aG", "libvirt", getUsername()})
 
 			if !doAll {
 				break
