@@ -75,11 +75,19 @@ func mountPartition() {
 }
 
 func chrootCommandRun(args []string) {
-	args = append([]string{mountPoint}, args...)
-	cmd := exec.Command("arch-chroot", args...)
+	var cmd *exec.Cmd
+	var errorSlice int
+	if partitionR == "/" {
+		errorSlice = 0
+		cmd = exec.Command(args[0], args[1:]...)
+	} else {
+		errorSlice = 1
+		args = append([]string{mountPoint}, args...)
+		cmd = exec.Command("arch-chroot", args...)
+	}
 	err := cmd.Run()
 	if err != nil {
-		other.PrintError("Failed to run \""+strings.Join(args[1:], " ")+"\" within chroot: "+err.Error(), 1)
+		other.PrintError("Failed to run \""+strings.Join(args[errorSlice:], " ")+"\" within chroot: "+err.Error(), 1)
 	}
 }
 

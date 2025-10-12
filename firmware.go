@@ -21,8 +21,8 @@ func firmwareSelector() {
 			return
 		case 2:
 			allPackages := append(nonOptional, optional...)
-			managePackages("-S", allPackages)
 			managePackages("-Rcns", []string{"linux-firmware"})
+			managePackages("-S", allPackages)
 		case 3:
 			optional = append(optional, firm+"intel")
 		case 4:
