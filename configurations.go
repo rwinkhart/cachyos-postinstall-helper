@@ -6,8 +6,13 @@ import (
 
 func configurations() {
 	for {
+		var choice int
+		if performAllTweaks {
+			choice = 2
+		} else {
+			choice = front.InputMenuGen("Custom config:", []string{"BACK", "ALL", "shell profile", "makepkg", "pacman"})
+		}
 		var doAll bool
-		choice := front.InputMenuGen("Custom config:", []string{"BACK", "ALL", "shell profile", "makepkg", "pacman"})
 		switch choice {
 		case 1:
 			return
@@ -34,6 +39,9 @@ func configurations() {
 			writeFile(mountPoint+"/etc/pacman.conf", pacman, "root", 0644)
 			writeFile(mountPoint+"/etc/pacman.d/hooks/paccache-clean.hook", pacmanHookClean, "root", 0644)
 			writeFile(mountPoint+"/etc/pacman.d/hooks/nvidia.hook", pacmanHookNvidia, "root", 0644)
+		}
+		if performAllTweaks {
+			break
 		}
 	}
 }

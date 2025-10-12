@@ -8,12 +8,11 @@ import (
 	"github.com/rwinkhart/go-boilerplate/other"
 )
 
-var mountPoint = "/mnt/cph"
-
 var username string
 var partitionR, partitionB string
+var mountPoint = "/mnt/cph"
+var performAllTweaks bool
 
-// TODO add mode to perform EVERYTHING
 func main() {
 	userInfo, err := user.Current()
 	if err != nil {
@@ -33,35 +32,67 @@ func main() {
 
 	for {
 		fmt.Println()
-		choice := front.InputMenuGen("Option:", []string{"pre-mount tweaks", "universal tweaks", "system tweaks", "removals", "applications", "configuration", "cosmic"})
+		choice := front.InputMenuGen("Option:", []string{"ALL", "pre-mount tweaks", "universal tweaks", "system tweaks", "removals", "applications", "configuration", "cosmic"})
 		switch choice {
 		case 1:
+			performAllTweaks = true
+			fallthrough
+		case 2:
 			if partitionIsMounted() {
 				fmt.Println("\n" + partitionR + " is already mounted on " + mountPoint)
 			} else {
 				premount()
 			}
-		case 2:
-			mountPartition()
-			universalTweaks()
+
+			if !performAllTweaks {
+				break
+			}
+			fallthrough
 		case 3:
 			mountPartition()
-			system()
+			universalTweaks()
+
+			if !performAllTweaks {
+				break
+			}
+			fallthrough
 		case 4:
 			mountPartition()
-			removals()
+			system()
+
+			if !performAllTweaks {
+				break
+			}
+			fallthrough
 		case 5:
 			mountPartition()
-			applications()
+			removals()
+
+			if !performAllTweaks {
+				break
+			}
+			fallthrough
 		case 6:
 			mountPartition()
-			configurations()
+			applications()
+
+			if !performAllTweaks {
+				break
+			}
+			fallthrough
 		case 7:
 			mountPartition()
+			configurations()
+
+			if !performAllTweaks {
+				break
+			}
+			fallthrough
+		case 8:
+			mountPartition()
 			cosmic()
-			// TODO keyboard shortcuts for screenshot/sticky window/terminal
-			// TODO window decoration position (not yet implemented?)
-			// TODO link CachyOS wallpapers?
+			// TODO window decoration position (not yet implemented)
+			// TODO screen blank shortcut (not yet implemented)
 		}
 	}
 }

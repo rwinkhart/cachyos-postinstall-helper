@@ -9,8 +9,13 @@ import (
 
 func applications() {
 	for {
+		var choice int
+		if performAllTweaks {
+			choice = 2
+		} else {
+			choice = front.InputMenuGen("Application to install:", []string{"BACK", "ALL", "yay-bin", "zsh", "htop", "neovim", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam", "corectrl"})
+		}
 		var doAll bool
-		choice := front.InputMenuGen("Application to install:", []string{"BACK", "ALL", "yay-bin", "zsh", "htop", "neovim", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam", "corectrl"})
 		switch choice {
 		case 1:
 			return
@@ -87,6 +92,9 @@ func applications() {
 			managePackages("-S", []string{"corectrl"})
 			managePackages("-Rcns", []string{"power-profiles-daemon"})
 			writeFile(mountPoint+"/etc/polkit-1/rules.d/90-corectrl.rules", corectrlPolkit, "root", 0644)
+		}
+		if performAllTweaks {
+			break
 		}
 	}
 }

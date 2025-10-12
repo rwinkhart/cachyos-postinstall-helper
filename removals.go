@@ -7,17 +7,22 @@ import (
 // TODO remove unneeded linux-firmware packages!
 func removals() {
 	for {
-		var doAll bool
-		choice := front.InputMenuGen("Application to remove:", []string{"BACK", "linux-cachyos-lts"})
-		var target string
+		var choice int
+		if performAllTweaks {
+			choice = 1
+		} else {
+			choice = front.InputMenuGen("Application to remove:", []string{"BACK", "linux-cachyos-lts"})
+		}
+		var targets []string
 		switch choice {
 		case 1:
 			return
 		case 2:
-			target = "linux-cachyos-lts"
+			targets = append(targets, "linux-cachyos-lts")
 		}
-		if !doAll {
-			managePackages("-Rcns", []string{target})
+		managePackages("-Rcns", targets)
+		if performAllTweaks {
+			break
 		}
 	}
 }
