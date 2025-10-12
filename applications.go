@@ -10,7 +10,7 @@ import (
 func applications() {
 	for {
 		var doAll bool
-		choice := front.InputMenuGen("Application to install:", []string{"BACK", "ALL", "yay-bin", "zsh", "htop", "neovim", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam"})
+		choice := front.InputMenuGen("Application to install:", []string{"BACK", "ALL", "yay-bin", "zsh", "htop", "neovim", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam", "corectrl"})
 		switch choice {
 		case 1:
 			return
@@ -82,6 +82,9 @@ func applications() {
 			fallthrough
 		case 10:
 			managePackages("-S", []string{"steam"})
+		case 11:
+			managePackages("-S", []string{"corectrl"})
+			writeFile(mountPoint+"/etc/polkit-1/rules.d/90-corectrl.rules", corectrlPolkit, "root", 0644)
 		}
 	}
 }
@@ -286,4 +289,15 @@ const zed = `{
         "button": false
     }
 }
+`
+
+const corectrlPolkit = `polkit.addRule(function(action, subject) {
+    if ((action.id == "org.corectrl.helper.init" ||
+         action.id == "org.corectrl.helperkiller.init") &&
+        subject.local == true &&
+        subject.active == true &&
+        subject.isInGroup("your-user-group")) {
+            return polkit.Result.YES;
+    }
+});
 `
