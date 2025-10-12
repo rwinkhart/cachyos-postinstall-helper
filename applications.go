@@ -85,6 +85,7 @@ func applications() {
 			managePackages("-S", []string{"steam"})
 		case 11:
 			managePackages("-S", []string{"corectrl"})
+			managePackages("-Rcns", []string{"power-profiles-daemon"})
 			writeFile(mountPoint+"/etc/polkit-1/rules.d/90-corectrl.rules", corectrlPolkit, "root", 0644)
 		}
 	}
