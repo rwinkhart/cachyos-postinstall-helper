@@ -9,6 +9,7 @@ func cosmic() {
 	filenamesToValues := map[string]string{
 		"AppList" + version + "enable_drag_source":  "true",
 		"AppList" + version + "favorites":           "[\n    com.system76.CosmicFiles\n]",
+		"Settings.Shortcuts" + version + "custom":   "{\n    (\n        modifiers: [\n            Super,\n            Shift,\n        ],\n        key: \"s\",\n    ): System(Screenshot),\n    (\n        modifiers: [\n            Ctrl,\n        ],\n        key: \"equal\",\n    ): ToggleSticky,\n}",
 		"Comp" + version + "autotile_behavior":      "PerWorkspace",
 		"Comp" + version + "cursor_follows_focus":   "false",
 		"Comp" + version + "focus_follows_cursor":   "true",
