@@ -88,6 +88,11 @@ func applications() {
 			fallthrough
 		case 10:
 			managePackages("-S", []string{"steam"})
+
+			if !doAll {
+				break
+			}
+			fallthrough
 		case 11:
 			managePackages("-S", []string{"corectrl"})
 			managePackages("-Rcns", []string{"power-profiles-daemon"})
