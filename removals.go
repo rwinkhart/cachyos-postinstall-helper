@@ -8,7 +8,7 @@ func removals() {
 	for {
 		var choice int
 		if performAllTweaks {
-			choice = 1
+			choice = 2
 		} else {
 			choice = front.InputMenuGen("Application to remove:", []string{"BACK", "linux-cachyos-lts"})
 		}
