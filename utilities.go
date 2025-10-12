@@ -41,6 +41,10 @@ func getUsername() string {
 }
 
 func partitionIsMounted() bool {
+	if partitionR == "/" {
+		return true
+	}
+
 	isMounted, err := mnt.Mounted(mountPoint)
 	if err != nil {
 		other.PrintError("Failed to verify whether "+partitionR+" is mounted", 1)
@@ -49,6 +53,10 @@ func partitionIsMounted() bool {
 }
 
 func mountPartition() {
+	if partitionR == "/" {
+		return
+	}
+
 	if !partitionIsMounted() {
 		// root
 		cmd := exec.Command("mount", partitionR, mountPoint)

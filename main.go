@@ -8,7 +8,7 @@ import (
 	"github.com/rwinkhart/go-boilerplate/other"
 )
 
-const mountPoint = "/mnt/cph"
+var mountPoint = "/mnt/cph"
 
 var username string
 var partitionR, partitionB string
@@ -23,9 +23,13 @@ func main() {
 		other.PrintError("This utility must be run as root", 1)
 	}
 
-	partitionR = front.Input("Target root partition (/dev/driveparition):")
-	partitionB = front.Input("Target boot (efi) partition (/dev/driveparition):")
-	mkdir("/mnt/cph")
+	partitionR = front.Input("Target root partition (/dev/driveparition OR \"/\" if already booted):")
+	if partitionR != "/" {
+		partitionB = front.Input("Target boot (efi) partition (/dev/driveparition):")
+		mkdir("/mnt/cph")
+	} else {
+		mountPoint = ""
+	}
 
 	for {
 		fmt.Println()
