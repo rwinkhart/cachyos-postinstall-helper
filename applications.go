@@ -27,6 +27,7 @@ func applications() {
 		case 4:
 			managePackages("-S", []string{"zsh", "zsh-autosuggestions", "zsh-syntax-highlighting"})
 			writeFile(mountPoint+"/home/"+getUsername()+"/.zshrc", zshrc, getUsername(), 0644)
+			writeFile(mountPoint+"/usr/local/bin/histclean", zshHistclean, "root", 0755)
 			err := os.RemoveAll(mountPoint + "/home/" + getUsername() + "/.bash_profile")
 			if err != nil {
 				other.PrintError("Failed to remove .bash_profile", 1)
@@ -139,6 +140,31 @@ alias grep='grep --color=auto'
 alias fastfetch='fastfetch -c neofetch'
 alias unmv='setopt shwordsplit && lastCmdSplit=(${(@s/ /)$(fc -ln -1)}) && newCmd="mv ${lastCmdSplit[3]} ${lastCmdSplit[2]}" && $newCmd && unsetopt shwordsplit'
 alias orphans='doas pacman -Rcns $(pacman -Qqdt)'
+`
+
+const zshHistclean = `#!/usr/bin/env zsh
+
+echo 'Starting history size:'
+ls -lh ~/.cache/zsh-histfile | cut -d " " -f5
+
+hist=()
+
+while IFS= read -r line; do
+    if [[ $line == "./"* || $line == "/"* ]]; then
+        hist+=($line)
+    elif [[ $line != "histclean" ]]; then
+        which $(echo $line | cut -d " " -f1) > /dev/null
+        [[ $? == 0 ]] && hist+=($line)
+    fi
+done < "$XDG_CACHE_HOME"/zsh-histfile
+
+echo -n "" > "$XDG_CACHE_HOME"/zsh-histfile
+for item in "${hist[@]}"; do
+    echo "$item" >> "$XDG_CACHE_HOME"/zsh-histfile
+done
+
+echo 'Ending history size:'
+ls -lh ~/.cache/zsh-histfile | cut -d " " -f5
 `
 
 const sysinitVim = `" rwinkhart/cachyos-postinstall-helper 09/28/2025
