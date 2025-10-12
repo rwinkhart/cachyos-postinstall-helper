@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"strings"
@@ -99,5 +100,11 @@ func mkdir(path string) {
 	err = os.Chown(path, 1000, 1000)
 	if err != nil {
 		other.PrintError("Failed to set ownership of \""+path+"\"", 1)
+	}
+}
+
+func allTweaksAnnounce(stage string) {
+	if performAllTweaks {
+		fmt.Println("Performing " + stage + "...")
 	}
 }

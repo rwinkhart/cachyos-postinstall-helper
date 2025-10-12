@@ -43,6 +43,7 @@ func main() {
 				fmt.Println("\n" + partitionR + " is already mounted on " + mountPoint)
 				os.Exit(1)
 			} else {
+				allTweaksAnnounce("pre-mount tweaks")
 				premount()
 			}
 
@@ -51,6 +52,7 @@ func main() {
 			}
 			fallthrough
 		case 3:
+			allTweaksAnnounce("universal tweaks")
 			mountPartition()
 			universalTweaks()
 
@@ -59,6 +61,7 @@ func main() {
 			}
 			fallthrough
 		case 4:
+			allTweaksAnnounce("system tweaks")
 			mountPartition()
 			system()
 
@@ -67,6 +70,7 @@ func main() {
 			}
 			fallthrough
 		case 5:
+			allTweaksAnnounce("removals")
 			mountPartition()
 			removals()
 
@@ -75,6 +79,7 @@ func main() {
 			}
 			fallthrough
 		case 6:
+			allTweaksAnnounce("application installs")
 			mountPartition()
 			applications()
 
@@ -83,6 +88,7 @@ func main() {
 			}
 			fallthrough
 		case 7:
+			allTweaksAnnounce("configurations")
 			mountPartition()
 			configurations()
 
@@ -91,6 +97,7 @@ func main() {
 			}
 			fallthrough
 		case 8:
+			allTweaksAnnounce("cosmic tweaks")
 			mountPartition()
 			cosmic()
 			// TODO window decoration position (not yet implemented)
@@ -101,6 +108,7 @@ func main() {
 			}
 			fallthrough
 		case 9:
+			allTweaksAnnounce("firmware selection")
 			firmwareSelector()
 		}
 		if !performAllTweaks {
