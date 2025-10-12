@@ -10,7 +10,7 @@ import (
 func applications() {
 	for {
 		var doAll bool
-		choice := front.InputMenuGen("Application to install:", []string{"BACK", "ALL", "pamac-aur", "yay-bin", "zsh", "htop", "neovim", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam"})
+		choice := front.InputMenuGen("Application to install:", []string{"BACK", "ALL", "yay-bin", "zsh", "htop", "neovim", "virt-manager (also installs qemu-desktop+libvirt)", "librewolf-bin", "zed", "steam"})
 		switch choice {
 		case 1:
 			return
@@ -18,20 +18,13 @@ func applications() {
 			doAll = true
 			fallthrough
 		case 3:
-			managePackages("-S", []string{"pamac-aur"})
-
-			if !doAll {
-				break
-			}
-			fallthrough
-		case 4:
 			managePackages("-S", []string{"yay-bin"})
 
 			if !doAll {
 				break
 			}
 			fallthrough
-		case 5:
+		case 4:
 			managePackages("-S", []string{"zsh", "zsh-autosuggestions", "zsh-syntax-highlighting"})
 			writeFile(mountPoint+"/home/"+getUsername()+"/.zshrc", zshrc, getUsername(), 0644)
 			err := os.RemoveAll(mountPoint + "/home/" + getUsername() + "/.bash_profile")
@@ -47,14 +40,14 @@ func applications() {
 				break
 			}
 			fallthrough
-		case 6:
+		case 5:
 			managePackages("-S", []string{"htop"})
 
 			if !doAll {
 				break
 			}
 			fallthrough
-		case 7:
+		case 6:
 			managePackages("-S", []string{"neovim"})
 			writeFile(mountPoint+"/etc/xdg/nvim/sysinit.vim", sysinitVim, "root", 0644)
 
@@ -62,7 +55,7 @@ func applications() {
 				break
 			}
 			fallthrough
-		case 8:
+		case 7:
 			managePackages("-S", []string{"virt-manager", "qemu-desktop", "libvirt"})
 			manageService("enable", "libvirtd.service")
 			manageService("start", "libvirtd.service")
@@ -72,14 +65,14 @@ func applications() {
 				break
 			}
 			fallthrough
-		case 9:
+		case 8:
 			managePackages("-S", []string{"librewolf-bin"})
 
 			if !doAll {
 				break
 			}
 			fallthrough
-		case 10:
+		case 9:
 			managePackages("-S", []string{"zed"})
 			mkdir(mountPoint + "/home/" + getUsername() + "/.config/zed")
 			writeFile(mountPoint+"/home/"+getUsername()+"/.config/zed/settings.json", zed, getUsername(), 0600)
@@ -88,7 +81,7 @@ func applications() {
 				break
 			}
 			fallthrough
-		case 11:
+		case 10:
 			managePackages("-S", []string{"steam"})
 		}
 	}
