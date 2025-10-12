@@ -104,5 +104,5 @@ const yay = `{
 	"sudobin": "doas",
 	"sudoflags": "",
 	"bottomup": true,
-	"sudoloop": false,
+	"sudoloop": false
 }`

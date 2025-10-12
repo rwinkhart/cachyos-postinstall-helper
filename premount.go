@@ -25,7 +25,7 @@ func premount() {
 				other.PrintError("Failed to enable fast_commit", 1)
 			}
 		}
-		if !performAllTweaks {
+		if performAllTweaks {
 			break
 		}
 	}

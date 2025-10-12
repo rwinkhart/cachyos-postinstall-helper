@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/rwinkhart/go-boilerplate/back"
@@ -23,6 +24,9 @@ func firmwareSelector() {
 			allPackages := append(nonOptional, optional...)
 			managePackages("-Rcns", []string{"linux-firmware"})
 			managePackages("-S", allPackages)
+			if performAllTweaks {
+				os.Exit(0)
+			}
 		case 3:
 			optional = append(optional, firm+"intel")
 		case 4:
