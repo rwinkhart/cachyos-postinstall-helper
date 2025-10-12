@@ -9,7 +9,12 @@ import (
 
 func premount() {
 	for {
-		choice := front.InputMenuGen("Tweak:", []string{"BACK", "enable ext4 fast_commit"})
+		var choice int
+		if performAllTweaks {
+			choice = 2
+		} else {
+			choice = front.InputMenuGen("Tweak:", []string{"BACK", "enable ext4 fast_commit"})
+		}
 		switch choice {
 		case 1:
 			return
@@ -19,6 +24,9 @@ func premount() {
 			if err != nil {
 				other.PrintError("Failed to enable fast_commit", 1)
 			}
+		}
+		if !performAllTweaks {
+			break
 		}
 	}
 }

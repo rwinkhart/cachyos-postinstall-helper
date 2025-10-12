@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"os/user"
 
 	"github.com/rwinkhart/go-boilerplate/front"
@@ -32,7 +33,7 @@ func main() {
 
 	for {
 		fmt.Println()
-		choice := front.InputMenuGen("Option:", []string{"ALL", "pre-mount tweaks", "universal tweaks", "system tweaks", "removals", "applications", "configuration", "cosmic"})
+		choice := front.InputMenuGen("Option:", []string{"ALL", "pre-mount tweaks", "universal tweaks", "system tweaks", "removals", "applications", "configuration", "cosmic", "firmware selector"})
 		switch choice {
 		case 1:
 			performAllTweaks = true
@@ -40,6 +41,7 @@ func main() {
 		case 2:
 			if partitionIsMounted() {
 				fmt.Println("\n" + partitionR + " is already mounted on " + mountPoint)
+				os.Exit(1)
 			} else {
 				premount()
 			}
@@ -93,6 +95,16 @@ func main() {
 			cosmic()
 			// TODO window decoration position (not yet implemented)
 			// TODO screen blank shortcut (not yet implemented)
+
+			if !performAllTweaks {
+				break
+			}
+			fallthrough
+		case 9:
+			firmwareSelector()
+		}
+		if !performAllTweaks {
+			os.Exit(0)
 		}
 	}
 }
