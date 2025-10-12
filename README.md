@@ -20,7 +20,7 @@ Notable Tweaks:
 ## Usage
 Begin by installing CachyOS via the standard GUI installer.
 
-If you intend on using all options provided by this utility, it is best to use systemd-boot, ext4, and to **_un_**check the following during installation:
+If you intend on using all options provided by this utility, it is best to use systemd-boot, ext4, and to ***un***check the following during installation:
 - CachyOS Packages
     - cachyos-micro-settings
     - cachyos-wallpapers
