@@ -1,5 +1,21 @@
 # CachyOS Post-Install Helper
-This is a simple utility meant to address what I personally dislike about the base CachyOS installation.
+This is an opinionated utility meant to customize the base CachyOS install to match my preferences.
+
+Notable Tweaks:
+- ext4 fast_commit option is enabled
+- root account is locked
+- user is added to uucp group for serial console access
+- sudo is replaced with doas
+- ipv6 privacy extensions are enabled
+- SysRq reboots are enabled
+- kernel security mitigations are disabled
+- amdgpu tuning is fully unlocked
+- amd_pstate is enabled in passive mode
+- the lts kernel is removed
+- many applications can be installed alongside custom configs
+- custom configs for pacman/makepkg (optimal builds)
+- custom Cosmic DE config
+- option to select specific linux-firmware packages required for your system
 
 ## Usage
 Begin by installing CachyOS via the standard GUI installer.
