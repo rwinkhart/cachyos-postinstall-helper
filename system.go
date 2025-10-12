@@ -84,12 +84,12 @@ func addKernelParams(newParameters []string) {
 	var parameters []string
 	for i := 0; fScanner.Scan(); i++ {
 		if i == 1 {
-			parameters = strings.Split(fScanner.Text(), " ")[2:]
+			parameters = strings.Split(fScanner.Text(), " ")[1:]
 			break
 		}
 	}
 	parameters = append(parameters, newParameters...)
-	writeFile(mountPoint+"/boot/loader/entries/linux-cachyos.conf", "title Linux Cachyos\noptions root=UUID=e2ff600b-0202-4620-bed3-54d7a58414f8 "+strings.Join(parameters, " ")+"\nlinux /vmlinuz-linux-cachyos\ninitrd /initramfs-linux-cachyos.img\n", "root", 0700)
+	writeFile(mountPoint+"/boot/loader/entries/linux-cachyos.conf", "title Linux Cachyos\noptions "+strings.Join(parameters, " ")+"\nlinux /vmlinuz-linux-cachyos\ninitrd /initramfs-linux-cachyos.img\n", "root", 0700)
 }
 
 const yay = `{
