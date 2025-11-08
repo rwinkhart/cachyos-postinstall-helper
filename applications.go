@@ -148,6 +148,26 @@ function term_clear() {
 zle -N zsh-redraw term_clear
 bindkey "^L" zsh-redraw
 
+# get chronological list of explicitly installed packages
+function pacplicit() {
+    # get array of all explicitly installed packages
+    local explicitly_installed=($(pacman -Qe | sed 's/ .*//'))
+
+    # get installation time for each package and store with timestamp for sorting
+    local package_times=()
+    for package in $explicitly_installed; do
+        local line=$(grep -E "(^|[[:space:]])installed $package([[:space:]]|$)" /var/log/pacman.log | tail -1)
+        local date=${${line:1}%%]*}
+        local timestamp=$(date -d "$date" +%s)
+        package_times+=("$timestamp $package")
+    done
+
+    # sort by timestamp and print
+    printf '%s\n' "${package_times[@]}" | sort -n | while read timestamp package; do
+        echo "$timestamp: $package"
+    done
+}
+
 # Stock aliases
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
