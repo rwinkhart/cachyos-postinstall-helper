@@ -4,7 +4,7 @@ go 1.25.5
 
 require (
 	github.com/moby/sys/mountinfo v0.7.2
-	github.com/rwinkhart/go-boilerplate v0.1.0
+	github.com/rwinkhart/go-boilerplate v0.1.1
 )
 
 require (
