@@ -268,86 +268,82 @@ augroup END
 `
 
 const zed = `{
-	// rwinkhart/cachyos-postinstall-helper 09/28/2025
+    // rwinkhart/cachyos-postinstall-helper 01/07/2026
 
     // AI Settings
-    "telemetry": {
-        "metrics": false,
-        "diagnostics": false
-    },
     "edit_predictions": {
         "mode": "subtle",
-        "enabled_in_text_threads": false
+        "enabled_in_text_threads": false,
     },
     "show_edit_predictions": true,
-    "agent": {
-        "default_profile": "ask",
-        "default_model": {
-            "provider": "copilot_chat",
-            "model": "claude-sonnet-4"
-        }
-    },
-    "features": {
-        "edit_prediction_provider": "copilot"
-    },
+    // Extension settings
+    "icon_theme": "JetBrains New UI Icons (Light)",
+    "theme": "Dracula",
     // General Settings
-    "minimap": {
-        "show": "always"
+    "telemetry": {
+        "metrics": true,
+        "diagnostics": true,
     },
-    "icon_theme": "JetBrains New UI Icons (Dark)",
+    "terminal": {
+        "shell": {
+            "program": "zsh",
+        },
+    },
+    "git": {
+        "inline_blame": {
+            "enabled": false,
+        },
+    },
+    "indent_guides": {
+        "enabled": true,
+        "line_width": 4,
+        "active_line_width": 8,
+        "coloring": "indent_aware",
+        "background_coloring": "disabled",
+    },
+    "colorize_brackets": true,
+    "vim_mode": false,
     "middle_click_paste": false,
     "base_keymap": "VSCode",
     "autosave": "off",
-    "theme": "Gruvbox Dark",
     "ui_font_size": 14,
     "buffer_font_size": 18,
     "auto_update": false,
-    "terminal": {
-        "shell": {
-            "program": "zsh"
-        }
-    },
     "tab_size": 4,
+    "use_autoclose": false,
+    "use_auto_surround": false,
     "preferred_line_length": 120,
-    "git": {
-        "inline_blame": {
-            "enabled": false
-        }
-    },
     // Language-specific Settings
     "languages": {
         "Python": {
-            "soft_wrap": "preferred_line_length"
+            "soft_wrap": "preferred_line_length",
         },
         "Go": {
-            "hard_tabs": true
+            "hard_tabs": true,
         },
-        "JavaScript": {
-            "format_on_save": "off"
-        },
-        "CSS": {
-            "format_on_save": "off"
-        }
     },
     // De-clutter UI
     "tab_bar": {
-        "show_nav_history_buttons": false
+        "show_nav_history_buttons": false,
     },
     "search": {
-        "button": false
+        "button": false,
     },
     "title_bar": {
-        "show_branch_name": false
+        "show_branch_name": false,
     },
     "notification_panel": {
-        "button": false
+        "button": false,
     },
     "collaboration_panel": {
-        "button": false
+        "button": false,
     },
     "git_panel": {
-        "button": false
-    }
+        "button": true,
+    },
+    "outline_panel": {
+        "button": false,
+    },
 }
 `
 

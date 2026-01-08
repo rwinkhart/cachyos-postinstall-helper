@@ -1,6 +1,6 @@
 module cachy-post
 
-go 1.25.1
+go 1.25.5
 
 require (
 	github.com/moby/sys/mountinfo v0.7.2
@@ -8,6 +8,6 @@ require (
 )
 
 require (
-	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/term v0.32.0 // indirect
+	golang.org/x/sys v0.39.0 // indirect
+	golang.org/x/term v0.38.0 // indirect
 )
