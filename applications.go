@@ -108,7 +108,6 @@ const zshrc = `# Shell settings
 HISTFILE="$XDG_CACHE_HOME"/zsh-histfile
 HISTSIZE=2500
 SAVEHIST=2000
-setopt INC_APPEND_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_FIND_NO_DUPS
 unsetopt beep
