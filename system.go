@@ -44,7 +44,9 @@ func system() {
 			var sysctlConf strings.Builder
 			sysctlConf.WriteString("net.ipv6.conf.all.use_tempaddr = 2\nnet.ipv6.conf.default.use_tempaddr = 2")
 			for _, nic := range nics {
-				sysctlConf.WriteString("\nnet.ipv6.conf." + nic.Name() + ".use_tempaddr = 2")
+				sysctlConf.WriteString("\nnet.ipv6.conf.")
+				sysctlConf.WriteString(nic.Name())
+				sysctlConf.WriteString(".use_tempaddr = 2")
 			}
 			writeFile(mountPoint+"/etc/sysctl.d/40-ipv6-priv-ext.conf", sysctlConf.String()+"\n", "root", 0644)
 

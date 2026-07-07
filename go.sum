@@ -1,8 +1,8 @@
 github.com/moby/sys/mountinfo v0.7.2 h1:1shs6aH5s4o5H2zQLn796ADW1wMrIwHsyJ2v9KouLrg=
 github.com/moby/sys/mountinfo v0.7.2/go.mod h1:1YOa8w8Ih7uW0wALDUgT1dTTSBrZ+HiBLGws92L2RU4=
-github.com/rwinkhart/go-boilerplate v0.1.1 h1:C+yyscGWeqvNpR91iw0i91zqX0LcxnCr1VOyT7iM4JY=
-github.com/rwinkhart/go-boilerplate v0.1.1/go.mod h1:/NVRKGslU20E5xU5YOgXzWxA6aa94BMtv5MtHRTb5Ek=
-golang.org/x/sys v0.39.0 h1:CvCKL8MeisomCi6qNZ+wbb0DN9E5AATixKsvNtMoMFk=
-golang.org/x/sys v0.39.0/go.mod h1:OgkHotnGiDImocRcuBABYBEXf8A9a87e/uXjp9XT3ks=
-golang.org/x/term v0.38.0 h1:PQ5pkm/rLO6HnxFR7N2lJHOZX6Kez5Y1gDSJla6jo7Q=
-golang.org/x/term v0.38.0/go.mod h1:bSEAKrOT1W+VSu9TSCMtoGEOUcKxOKgl3LE5QEF/xVg=
+github.com/rwinkhart/go-boilerplate v0.3.1 h1:vkVRuptO2s1yPzzwpvtiiB0c/hPB6yr0p1mzZ2Myb9E=
+github.com/rwinkhart/go-boilerplate v0.3.1/go.mod h1:ES13A2r9fnCVfyezwMBgY/RgA4pOIudOUXz3Jk/ikes=
+golang.org/x/sys v0.46.0 h1:noSf2Fq6F8DBgS+LysIkx7rIExoNHJsxOAtPp4rthXw=
+golang.org/x/sys v0.46.0/go.mod h1:4GL1E5IUh+htKOUEOaiffhrAeqysfVGipDYzABqnCmw=
+golang.org/x/term v0.44.0 h1:0rLvDRCtNj0gZkyIXhCyOb2OAzEhLVqc4B+hrsBhrmc=
+golang.org/x/term v0.44.0/go.mod h1:7ze4MdzUzLXpSAoFP1H0bOI9aXDqveSvatT5vKcFh2Y=
